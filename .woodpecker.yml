@@ -1,0 +1,16 @@
+steps:
+  - name: build-push
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      registry: acer.home.marcinplata.pl
+      repo: acer.home.marcinplata.pl/rpi-temp-manager
+      tags: latest,${CI_COMMIT_SHA}
+      platforms: linux/amd64,linux/arm64,linux/arm/v7
+      custom_dns: 192.168.0.100
+      username:
+        from_secret: registry_username
+      password:
+        from_secret: registry_password
+    when:
+      - event: [push, manual]
+        branch: master
